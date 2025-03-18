@@ -8,7 +8,8 @@ class AdminController{
         try {
             const data = req.body;
             
-            const addBook = await adminService.addBook({id: data.id, name: data.name, author: data.author, quantity: data.quantity});
+            const result = await adminService.addBook({name: data.name, author: data.author, quantity: data.quantity});
+            res.json(result);
         } catch (err: any) {
             res.status(500).json({message: 'An error occurred while adding books', err});
         }
@@ -17,7 +18,9 @@ class AdminController{
     async updateBook(req: Request, res: Response){
         try {
             const data = req.body;
-            const updateBook = await adminService.updateBook({id: data.id, name: data.name, author: data.author, quantity: data.quantity})
+            const result = await adminService.updateBook({id: data.id, name: data.name, author: data.author, quantity: data.quantity});
+            res.json(result);
+
         } catch (err: any) {
             res.status(500).json({message: 'An error occurred while updating books', err});
         }
@@ -25,8 +28,10 @@ class AdminController{
 
     async removeBook(req: Request, res: Response){
         try {
-            const data = req.body;
-            const removeBook = await adminService.removeBook({id: data.id})
+            const id = req.params.book_id;
+            const result = await adminService.removeBook(id)
+            res.json(result);
+            
         } catch (err: any) {
             res.status(500).json({message: 'An error occurred while updating books', err});
         }
